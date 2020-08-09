@@ -12,6 +12,42 @@ namespace Maze
         public int _mazeSize { get; private set; }
 
         [Inject] public CellManager cellManager { get; set; }
+        
+        
+        public void CreateMaze(int size, int startX = 0, int startY = 0)
+        {
+            Debug.Log("Run Maze Generation Algorithm!!");
+            _mazeSize = size;
+            Visit(cellManager.GetCell(startX, startY));
+            BorderTheMaze();
+        }
+
+        private void BorderTheMaze()
+        {
+            for (int index = -1; index < _mazeSize; index++)
+            {
+                cellManager.GetCell(-1, index);
+                cellManager.GetCell(_mazeSize, index);
+                cellManager.GetCell(index, -1);
+                cellManager.GetCell(index, _mazeSize);
+            }
+            // entrance
+            OpenDoor(-1, -1);
+            OpenDoor(-1, 0);
+            OpenDoor(0, -1);
+            // exit
+            OpenDoor(_mazeSize, _mazeSize);
+            OpenDoor(_mazeSize, _mazeSize - 1);
+            OpenDoor(_mazeSize - 1, _mazeSize);
+            cellManager.GetCell(_mazeSize - 1, _mazeSize - 1).DoVisit();
+        }
+
+        public void OpenDoor(int x, int y)
+        {
+            CellView cell = cellManager.GetCell(x, y);
+            cell.DoVisit();
+            cell.SetDoor();
+        }
 
         /// <summary>
         /// do visit cell
@@ -28,7 +64,7 @@ namespace Maze
             AddVisitAbleCell(aroundCellList, cell.x, cell.y - 1);
             AddVisitAbleCell(aroundCellList, cell.x, cell.y + 1);
             aroundCellList.ForEach(aroundCell => aroundCell.OnVisitNextTo());
-
+            
             // do visit
             while (aroundCellList.Count > 0)
             {
@@ -49,13 +85,6 @@ namespace Maze
             {
                 aroundCell.Add(cellManager.GetCell(x, y));
             }
-        }
-
-        public void CreateMaze(int size, int startX = 0, int startY = 1)
-        {
-            Debug.Log("Run Maze Generation Algorithm!!");
-            _mazeSize = size;
-            Visit(cellManager.GetCell(startX, startY));
         }
     }
 }

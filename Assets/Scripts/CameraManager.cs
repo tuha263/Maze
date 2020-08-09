@@ -1,15 +1,16 @@
-using System;
 using UnityEngine;
 
-namespace DefaultNamespace
+public class CameraManager : MonoBehaviour
 {
-    public class CameraManager : MonoBehaviour
-    {
-        public Camera _camera;
+    public Camera _camera;
 
-        private void Awake()
-        {
-            _camera = GetComponent<Camera>();
-        }
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+    }
+
+    public void Setup(int size)
+    {
+        _camera.fieldOfView = size * 2;
     }
 }

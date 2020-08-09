@@ -14,7 +14,7 @@ namespace Controllers
         {
             Debug.Log("Start Game!!");
             // generate maze
-            createMazeSignal.Dispatch(20, player.GetStartPosition());   
+            createMazeSignal.Dispatch(20);   
         }
     }
 

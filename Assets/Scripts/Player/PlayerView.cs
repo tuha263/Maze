@@ -14,11 +14,6 @@ namespace Player
             transform.localPosition = startPosition;
         }
 
-        public Vector3 GetStartPosition()
-        {
-            return startPosition;
-        }
-
         public CellView GetCurrencyCell()
         {
             var localPosition = transform.localPosition;

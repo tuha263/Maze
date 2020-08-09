@@ -5,7 +5,6 @@ namespace Player
 {
     public interface IPlayer
     {
-        Vector3 GetStartPosition();
         CellView GetCurrencyCell();
         Transform GetTranform();
     }

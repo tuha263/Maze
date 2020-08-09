@@ -42,6 +42,7 @@ public class SLGContext : MVCSContext
         injectionBinder.Bind<PathFindingAlgorithm>().ToSingleton();
         injectionBinder.Bind<CellManager>().ToValue(slgRoot.cellManager);
         injectionBinder.Bind<IPlayer>().ToValue(slgRoot.playerView);
+        injectionBinder.Bind<CameraManager>().ToValue(slgRoot.cameraManager);
         
         // mediation binding
         mediationBinder.Bind<CellView>().To<CellMediator>();

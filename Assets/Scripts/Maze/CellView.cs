@@ -11,6 +11,10 @@ namespace Maze
         public bool isPath { get; private set; }
         public bool moveTracking { get; private set; }
         public CellView previousCell;
+        // [SerializeField] private Material groundMaterial;
+        [SerializeField] private Material groundMaterial;
+        [SerializeField] private Material doorMaterial;
+        private MeshRenderer _meshRenderer;
 
 
         public void Init(int x, int y)
@@ -22,12 +26,14 @@ namespace Maze
             nextToPathCount = 0;
 
             transform.localPosition = new Vector3(x, 0, y);
+            _meshRenderer = GetComponent<MeshRenderer>();
         }
 
         public void DoVisit()
         {
             isPath = true;
             transform.localPosition = new Vector3(x, -1, y);
+            _meshRenderer.material = groundMaterial;
         }
 
         public void DoMove()
@@ -53,6 +59,12 @@ namespace Maze
         public void ResetPathFinding()
         {
             moveTracking = false;
+        }
+
+        public void SetDoor()
+        {
+            GetComponent<BoxCollider>().enabled = false;
+            _meshRenderer.material = doorMaterial;
         }
     }
 }

@@ -24,7 +24,6 @@ namespace Controllers
             
             _path = pathFindingAlgorithm.FindPath(player.GetCurrencyCell(), endCell);
             
-            _path.ForEach(cell => Debug.Log($"{cell.x} -  {cell.y}"));
             if (_path.Count > 0)
             {
                 _moveTween.Kill();

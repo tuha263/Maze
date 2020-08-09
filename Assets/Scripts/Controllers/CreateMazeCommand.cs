@@ -8,14 +8,15 @@ namespace Controllers
     public class CreateMazeCommand : Command
     {
         [Inject] public int size { get; set; }
-        [Inject] public Vector3 startPosition { get; set; }
         [Inject] public MazeGenerationAlgorithm mazeGenerationAlgorithm { get; set; }
+        [Inject] public CameraManager cameraManager { get; set; }
 
         public override void Execute()
         {
-            mazeGenerationAlgorithm.CreateMaze(size, (int) startPosition.x, (int) startPosition.z);
+            mazeGenerationAlgorithm.CreateMaze(size);
+            cameraManager.Setup(size);
         }
     }
     
-    public class CreateMazeSignal : Signal<int, Vector3>{}
+    public class CreateMazeSignal : Signal<int>{}
 }

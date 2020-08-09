@@ -108,3 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5c3e96d24d4c669eefd1e0db5bee93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousCell: {fileID: 0}
+  groundMaterial: {fileID: 2100000, guid: 89592bc10a4de0547a7b2e2b2a02cc75, type: 2}
+  doorMaterial: {fileID: 2100000, guid: ae1cc8cee9f252144b416d96e5604b8d, type: 2}
