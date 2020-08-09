@@ -12,12 +12,12 @@ namespace Maze
         public int _mazeSize { get; private set; }
 
         [Inject] public CellManager cellManager { get; set; }
-        
-        
+
+
         public void CreateMaze(int size, int startX = 0, int startY = 0)
         {
             Debug.Log("Run Maze Generation Algorithm!!");
-            _mazeSize = size;
+            _mazeSize = size * 2 - 1;
             Visit(cellManager.GetCell(startX, startY));
             BorderTheMaze();
         }
@@ -31,6 +31,7 @@ namespace Maze
                 cellManager.GetCell(index, -1);
                 cellManager.GetCell(index, _mazeSize);
             }
+
             // entrance
             OpenDoor(-1, -1);
             OpenDoor(-1, 0);
@@ -46,6 +47,15 @@ namespace Maze
         {
             CellView cell = cellManager.GetCell(x, y);
             cell.DoVisit();
+            // create wall
+            for (int i = 0; i < _mazeSize; i++)
+            {
+                for (int j = 0; j < _mazeSize; j++)
+                {
+                    cellManager.GetCell(i, j);
+                }
+            }
+
             cell.SetDoor();
         }
 
@@ -59,12 +69,11 @@ namespace Maze
 
             // get around cell list
             List<CellView> aroundCellList = new List<CellView>();
-            AddVisitAbleCell(aroundCellList, cell.x - 1, cell.y);
-            AddVisitAbleCell(aroundCellList, cell.x + 1, cell.y);
-            AddVisitAbleCell(aroundCellList, cell.x, cell.y - 1);
-            AddVisitAbleCell(aroundCellList, cell.x, cell.y + 1);
-            aroundCellList.ForEach(aroundCell => aroundCell.OnVisitNextTo());
-            
+            AddVisitAbleCell(aroundCellList, cell.x - 2, cell.y);
+            AddVisitAbleCell(aroundCellList, cell.x + 2, cell.y);
+            AddVisitAbleCell(aroundCellList, cell.x, cell.y - 2);
+            AddVisitAbleCell(aroundCellList, cell.x, cell.y + 2);
+
             // do visit
             while (aroundCellList.Count > 0)
             {
@@ -72,6 +81,8 @@ namespace Maze
                 CellView randomCell = aroundCellList[randomIndex];
                 if (randomCell.IsAbleToVisit())
                 {
+                    CellView wall = cellManager.GetCell((randomCell.x + cell.x) / 2, (randomCell.y + cell.y) / 2);
+                    wall.DoVisit();
                     Visit(randomCell);
                 }
 

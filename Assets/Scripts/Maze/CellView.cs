@@ -7,7 +7,6 @@ namespace Maze
     {
         public int x { get; private set; }
         public int y { get; private set; }
-        public int nextToPathCount { get; private set; }
         public bool isPath { get; private set; }
         public bool moveTracking { get; private set; }
         public CellView previousCell;
@@ -23,7 +22,6 @@ namespace Maze
             this.y = y;
             isPath = false;
             moveTracking = false;
-            nextToPathCount = 0;
 
             transform.localPosition = new Vector3(x, 0, y);
             _meshRenderer = GetComponent<MeshRenderer>();
@@ -41,14 +39,9 @@ namespace Maze
             moveTracking = true;
         }
 
-        public void OnVisitNextTo()
-        {
-            nextToPathCount++;
-        }
-
         public bool IsAbleToVisit()
         {
-            return !isPath && nextToPathCount < 2;
+            return !isPath;
         }
 
         public bool IsAbleToMove()

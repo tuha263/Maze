@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
 
     public void Setup(int size)
     {
+        size *= 2;
         _camera.fieldOfView = 100 * (1f *( size + 2) / 22);
         float camPos = 1f * (size - 1) / 2;
         _camera.transform.localPosition = new Vector3(camPos,10,camPos);
