@@ -5,6 +5,7 @@ using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
+using UI;
 using UnityEngine;
 
 public class SLGContext : MVCSContext
@@ -47,5 +48,6 @@ public class SLGContext : MVCSContext
         // mediation binding
         mediationBinder.Bind<CellView>().To<CellMediator>();
         mediationBinder.Bind<PlayerView>().To<PlayerMediator>();
+        mediationBinder.Bind<MainUIView>().To<MainUIMediator>();
     }
 }

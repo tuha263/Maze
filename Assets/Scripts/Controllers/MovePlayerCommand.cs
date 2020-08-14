@@ -26,7 +26,7 @@ namespace Controllers
             
             if (_path.Count > 0)
             {
-                _moveTween.Kill();
+                MoveTween.Kill();
                 DoMove(0);
             }
             
@@ -34,7 +34,7 @@ namespace Controllers
         }
 
 
-        private static Tween _moveTween;
+        public static Tween MoveTween;
         private void DoMove(int pathCellIndex)
         {
             if (pathCellIndex == _path.Count)
@@ -42,7 +42,7 @@ namespace Controllers
                 return;
             }
             CellView nextCell = _path[pathCellIndex];
-            _moveTween = player.GetTranform().DOMove(new Vector3(nextCell.x, 0, nextCell.y), 0.2f).SetEase(Ease.Linear).OnComplete(() =>
+            MoveTween = player.GetTranform().DOMove(new Vector3(nextCell.x, 0, nextCell.y), 0.2f).SetEase(Ease.Linear).OnComplete(() =>
             {
                 DoMove(pathCellIndex + 1);
             });

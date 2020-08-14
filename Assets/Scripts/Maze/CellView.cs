@@ -13,6 +13,7 @@ namespace Maze
         // [SerializeField] private Material groundMaterial;
         [SerializeField] private Material groundMaterial;
         [SerializeField] private Material doorMaterial;
+        private Material wallMaterial;
         private MeshRenderer _meshRenderer;
 
 
@@ -25,6 +26,7 @@ namespace Maze
 
             transform.localPosition = new Vector3(x, 0, y);
             _meshRenderer = GetComponent<MeshRenderer>();
+            wallMaterial = _meshRenderer.material;
         }
 
         public void DoVisit()
@@ -52,6 +54,15 @@ namespace Maze
         public void ResetPathFinding()
         {
             moveTracking = false;
+        }
+
+        public void ResetGenerateMaze()
+        {
+            isPath = false;
+            transform.localPosition = new Vector3(x, 0, y);
+            _meshRenderer.material = wallMaterial;
+            gameObject.SetActive(false);
+            GetComponent<BoxCollider>().enabled = true;
         }
 
         public void SetDoor()

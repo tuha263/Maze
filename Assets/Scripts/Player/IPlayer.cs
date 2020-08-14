@@ -7,5 +7,6 @@ namespace Player
     {
         CellView GetCurrencyCell();
         Transform GetTranform();
+        void Reset();
     }
 }

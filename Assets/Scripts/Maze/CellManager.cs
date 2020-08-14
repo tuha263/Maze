@@ -14,23 +14,22 @@ namespace Maze
 
         public CellView GetCell(int x, int y)
         {
-            if (_cellMap.ContainsKey(x) && _cellMap[x].ContainsKey(y))
+            if (!_cellMap.ContainsKey(x) || !_cellMap[x].ContainsKey(y))
             {
-                return _cellMap[x][y];
+                if (!_cellMap.ContainsKey(x))
+                {
+                    _cellMap.Add(x, new Dictionary<int, CellView>());
+                }
+
+                // add new cell
+                CellView cell = Instantiate(cellPrefab, transform);
+                cell.Init(x, y);
+                // add new row
+                _cellMap[x].Add(y, cell);
+
             }
 
-            // add new row
-            if (!_cellMap.ContainsKey(x))
-            {
-                _cellMap.Add(x, new Dictionary<int, CellView>());
-            }
-
-            // add new cell
-            CellView cell = Instantiate(cellPrefab, transform);
-            cell.Init(x, y);
-            _cellMap[x].Add(y, cell);
-            
-
+            _cellMap[x][y].gameObject.SetActive(true);
             return _cellMap[x][y];
         }
 
@@ -41,6 +40,17 @@ namespace Maze
                 foreach (var cell in row.Values)
                 {
                     cell.ResetPathFinding();
+                }
+            }
+        }
+
+        public void ResetGenerateMaze()
+        {
+            foreach (Dictionary<int,CellView> row in _cellMap.Values)
+            {
+                foreach (var cell in row.Values)
+                {
+                    cell.ResetGenerateMaze();
                 }
             }
         }

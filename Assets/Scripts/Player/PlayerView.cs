@@ -24,5 +24,10 @@ namespace Player
         {
             return transform;
         }
+
+        public void Reset()
+        {
+            transform.localPosition = startPosition;
+        }
     }
 }
